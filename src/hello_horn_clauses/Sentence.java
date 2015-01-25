@@ -1,5 +1,7 @@
 package hello_horn_clauses;
 
+import java.util.Objects;
+
 public class Sentence 
 {
 	private String verb;
@@ -31,6 +33,24 @@ public class Sentence
 	{
 		return verb + "(" + object + ", " + subject + ").";
 	}
+	
+	@Override
+	public boolean equals(Object other)
+	{
+	    if (!(other instanceof Sentence))
+	        return false;
+	    if (other == this)
+	        return true;
+	    Sentence o = (Sentence) other;
+	    return o.subject.equals(subject) && o.object.equals(object) && o.verb.equals(verb);
+	}
+	
+	@Override
+	public int hashCode ()
+	{
+	    return Objects.hash(object, subject, verb);
+	}
+	
 	
 }
 

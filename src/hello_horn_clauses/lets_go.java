@@ -12,13 +12,13 @@ import java.util.regex.Pattern;
 
 public class lets_go 
 {
-	
-	
 	public static void main(String[] args) throws IOException 
 	{
-	    Ontology ontology = new Ontology();
-	    BufferedReader br = new BufferedReader(new FileReader("/home/matthias/Workbench/SUTD/2_January/Prolog/horn_data_test.pl"));
-	    Pattern p = Pattern.compile("'(.*?)'\\('(.*?)','(.*?)'\\)\\."); 
+		
+		
+		Ontology ontology = new Ontology();
+	    BufferedReader br = new BufferedReader(new FileReader("/home/matthias/Workbench/SUTD/2_January/learning_first-order_horn_clauses_from_web_text/reverb/code/input_data/reverb_original_data__sentences.txt"));
+	    Pattern p = Pattern.compile("'(.*?)'\\('(.*?)',\\s*'(.*?)'\\)\\.");
 	    String line;
 	    while ((line = br.readLine()) != null) 
 	    {
@@ -34,24 +34,36 @@ public class lets_go
 
 	    for( String joint: ontology.getJoints() )
 	    {
-	        for( Integer subind: ontology.getSubjectIndices( joint ) )
+	    	for( Integer subind: ontology.getSubjectIndices( joint ) )
 	        {
-	            Sentence xaS = ontology.getSentence( subind );
-	            for( Integer obind: ontology.getObjectIndices( joint ) )
+	        	Sentence xaS = ontology.getSentence( subind );
+
+	        	for( Integer obind: ontology.getObjectIndices( joint ) )
 	            {
-	                Sentence yOb = ontology.getSentence( obind );
+
+	        		Sentence yOb = ontology.getSentence( obind );
+	                
 	                Sentence s = new Sentence( xaS.getVerb(),
 	                                           xaS.getObject(),
 	                                           yOb.getSubject() );
-	                System.out.println( s );
+	                
+	                //System.out.println( s );                
+	                ontology.numberRules( s );    
+	                
 	            }
 	        }
 	    }
+	    for (Map.Entry<Sentence, Integer> entry : ontology.ruleCount.entrySet()) 
+	    {
+	        System.out.println(entry.getKey()+" : "+entry.getValue());
+	    }       
 	}	
-}
 	
+	
+} 
 
 
+		
 
 
 
