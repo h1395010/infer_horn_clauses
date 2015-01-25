@@ -1,23 +1,35 @@
 package hello_horn_clauses;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.util.Collections.reverseOrder;
+
 
 public class lets_go 
 {
 	public static void main(String[] args) throws IOException 
 	{
 		
+		System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("/home/matthias/Workbench/SUTD/2_January/learning_first-order_horn_clauses_from_web_text/reverb/code/input_data/output.txt"))));
 		
+		//reverb_e.input_7
+		//reverb_original_data__sentences
 		Ontology ontology = new Ontology();
-	    BufferedReader br = new BufferedReader(new FileReader("/home/matthias/Workbench/SUTD/2_January/learning_first-order_horn_clauses_from_web_text/reverb/code/input_data/reverb_original_data__sentences.txt"));
+	    BufferedReader br = new BufferedReader(new FileReader("/home/matthias/Workbench/SUTD/2_January/learning_first-order_horn_clauses_from_web_text/reverb/code/input_data/reverb_e.input_7.txt"));
 	    Pattern p = Pattern.compile("'(.*?)'\\('(.*?)',\\s*'(.*?)'\\)\\.");
 	    String line;
 	    while ((line = br.readLine()) != null) 
@@ -53,105 +65,26 @@ public class lets_go
 	            }
 	        }
 	    }
-	    for (Map.Entry<Sentence, Integer> entry : ontology.ruleCount.entrySet()) 
-	    {
-	        System.out.println(entry.getKey()+" : "+entry.getValue());
-	    }       
+	    
+	    
+	    
+	    
+	    ontology.ruleCount.entrySet().stream()
+	    //just some threshold
+	    .filter(e -> e.getValue() > 333)
+        .sorted(reverseOrder(Map.Entry.comparingByValue()))
+        .forEach(e -> System.out.println(e.getKey() + " : " + e.getValue()));
+	    
+	    
+	    
+	    
+	    
+		
+		
 	}	
-	
-	
 } 
 
 
-		
-
-
-
-
-
-
-
-/*	
 	
-	public static void main(String[] args) throws IOException
-    {	
-		
-		BufferedReader br_0 = new BufferedReader(new FileReader("/home/matthias/Workbench/SUTD/2_January/Prolog/horn_data_test.pl"));
-		String line_0;
-		
-		
-		List<List<String>> arr = new ArrayList<>();
-		Pattern p = Pattern.compile("'(.*?)'(?![a-zA-Z])"); 
-		//while the file is still reading
-		while ((line_0 = br_0.readLine()) != null) {
-		     List<String> three = new ArrayList<>();         
-		     Matcher m = p.matcher(line_0);
-		     int j = 0;
-		     while (m.find()) {
-		         three.add( m.group(1) );
-		     }
-		     arr.add( three );
-		}
-
-		br_0.close();
-		
-		
-		
-		for( List<String> three: arr ){
-		    for( String s: three ){
-		        System.out.print( s  + " |||" );
-		    }
-		    System.out.println();
-		}
-		
-		    
-		 
-		
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		 
-		    
-		    
-	 }
-		
-    
-	
-}
-
-
-
-
-
-
-
-
-
-
-
-
-Map<String,Integer> occurs = new HashMap<>();
-int i = 0;
-for( List<String> three: arr ){
-    for( String s: three ){
-        Integer where = occurs.get( s );
-        if( where == null ){
-            occurs.put( s, i );
-        } else {
-            System.out.println( s + " already in " + where +
-                                " and also in " + i );
-        }
-    }
-    i++;
-}
-*/
 
 	

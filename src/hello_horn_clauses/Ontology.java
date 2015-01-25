@@ -93,9 +93,17 @@ public class Ontology
 		}
 		ruleCount.put(sentence, ruleCount.get(sentence) + 1);
 	}
+	
+	
+	
 		
 		
 }
+
+
+
+
+
 
 
 /*
